@@ -1,74 +1,77 @@
-#Allows voters and politicians to create, list, update, and delete records.
+#Main page that allows voters and politicians to create, list, update, and delete records.
 
-require './person.rb'
-require './voters.rb'
-require './politicians.rb'
 require './records.rb'
 
-puts "Welcome to Voter Simulation"
-puts "What would you like to do? Please select from the following."
-puts "Options: (C)reate, (L)ist, (U)pdate, (D)elete"
-case option = gets.chomp
-when "C"
-        puts "What would you like to create?"
+class Main
+  def initialize
+    @records = Records.new
+  end
+
+#Opening greeting and menu options.
+puts "Welcome to Voter Simulation!"
+puts "Voter Simulation gives you the ability to create, list, update, and delete records.\n So, let's begin. Selecting from the following, what would you like to do?"
+puts "Options: (C)reate, (L)ist, (U)pdate, (D)elete or (E)nd records?"
+  case request = gets.chomp.upcase.strip
+      
+    when "C"
+      create_request
+    when "L"
+      puts @records.list
+    when "U"
+      update_request
+    when "D"
+      delete_request
+    when "E"
+      return_request
     else
-        puts "Oops, choose either C, L, U or D."
-end
+      puts "Oops :/ Try again."
+  end
 
-puts "Would you like to create a voter or politician?"
-puts "Options: (P)olitician or (V)oter"
-case option = gets.chomp
-when "P" do
-    get('./records.rb', == create_politician)
-
-when "V" do
-    get('./records.rb', == create_voter)
-else
-    puts "Oops, not again."
-end
-   
-
-when "L" do
-    get('./records.rb', results += Voter, Politician)
-return results
-    
-else
-    puts "Oops :/"
-end
-
-when "U"
-    puts "Who would you like to update?"
-    puts "Options: (N)ame, (Pa)rty_affiliation, (Po)litics?"
-case option = gets.chomp
-    
-when "N", "Pa", "Po"
-    get('./records.rb', == update_voter, update_politician)
-    
-else
-    puts "Oops, try again."
-end
-       
-when "D"
-    puts "Who would like to delete?/n (V) or (P)?"
-    case option = gets.chomp
+def create_request
+    puts "Would you like to create a (V)oter or (P)olitician?"
+    case request = gets.chomp.upcase.strip
         
-when "V"
-    puts "Are you sure? (Y)es or (N)o"
-       if "Y"
-    get('./records.rb', == delete_voter)
-       if "N"
-    puts "What would you like to do?"
-else
-    puts "Oops, :/"
+      when "V"
+       puts "Name?"
+       name = gets.chomp.upcase.strip
+       puts "Politics?"
+       puts "(L)iberal, (C)onservative, (T)ea Party, (S)ocialists, or (N)eutral."
+       politics = gets.chomp.upcase.strip
+      
+    case politics
+      when "L"
+       politics = "Liberal"
+      when "C"
+       politics = "Conservative"
+      when "T"
+       politics = "Tea Party"
+      when "S"
+       politics = "Socialists"
+      when "N"
+       politics = "Neutral"
+      else
+       puts "Oops! That options is not available. Let's try again."
+      end     
+        
+      @record.create_voter(name, politics)
     end
-           
-when "P"
-    puts "Are you sure? (Y)es or (N)o"
-        if "Y"
-    get('./records.rb', == delete_politician)
-       if "N"
-    puts "What would you like to do?"
-else
-    puts "Oops, :/"
+    
+    when "P"
+       puts "Name?"
+       name = gets.chomp.upcase.strip
+       puts "Party_Affiliation?"
+       puts "(D)emocrat or (R)epublican?"
+       party_affiliation = gets.chomp.upcase.strip
+      
+    case party_affiliation
+      when "D"
+       party_affiliation = "Democrat"
+      when "C"
+       party_affiliation = "Republican"
+      else
+       puts "Oops! That options is not available. Let's try again."
+    end
+        
+      @record.create_politician(name, party_affiliation)
     end
 end
