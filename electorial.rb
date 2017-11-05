@@ -17,10 +17,12 @@ case option = gets.chomp.upcase
     
      when "V"
        puts "Name (First and Last)?"
-         case name = gets.chomp.upcase
-           puts "Political Affiliation? options: (L)iberal, (C)onservative, (T)ea Party, (S)ocialist, or (N)eutral"
-         case option_politics = gets.chomp.upcase
-         
+     case name = gets.chomp.upcase
+     
+     when "V"
+       puts "Voter Politics: (L)iberal, (C)onservative, (T)ea Party, (S)ocialist, or (N)eutral"
+       voter_politics = gets.chomp.upcase
+         case voter_politics
       when "L"
         records.create_voter(name, "Liberal")
           puts "New voter record for [#{name}, Liberal] created."
@@ -43,6 +45,8 @@ case option = gets.chomp.upcase
      when "P"
        puts "Name (First, Last)?"
          case name = gets.chomp.upcase
+       
+     when "P"
        puts "Party_Affiliation? options: (D)emocrat or (R)epublican"
          case party_affiliation = gets.chomp.upcase
     
@@ -64,29 +68,37 @@ case option = gets.chomp.upcase
   when "U"
     puts "Who would you like to update? options: Name (First, Last)"
       case option_update_name = gets.chomp.upcase
+          
+  when "U"
     person_update = records.find_person_by_name(update_name)    
       if person_update == nil
         puts "#{update_name} not found."
       else
         puts "Updated Name"
           case new_name = gets.chomp.upcase
+              
+   when "U"
             person_update.update_new(new_name)
       
       if person_update.is_a?(Voter)
         puts "Are updating your political affiliation options: (L)iberal,(C)onservative, (T)ea Party, (S)ocialist, or (N)eutral"
           case new_politics = gets.chomp.upcase
-            person_update.update_politics([options: "Liberal", "Conservative", "Tea Party", "Socialist", "Neutral"].detect{ |politics| politics.start_with?(new_politics)})
+              
+   when "U"
+          person_update.update_politics[options=> 'Liberal' 'Conservative' 'Tea Party' 'Socialist' 'Neutral']
       
       else
         puts "Are you updating your party affiliation? options: (D)emocrat or (R)epublican"
           case new_party_affiliation = gets.chomp.upcase
-            person_update.update_party_affiliation([options: "Democrat", "Republican"].detect{ |party_affiliation| party_affiliation.start_with?(new_party_affiliation)})
+   when "U"
+            person_update.update_party_affiliation[options=> 'Democrat' 'Republican']
     end
   end 
-      
-  when "D"
+end
     puts "Who would you like to delete? option: name (first, last)"
-      case option_name_delete= gets.chomp.upcase
+      case option_name_delete = gets.chomp.upcase
+          
+ when "D"
         person_delete = records.find_person_by_name(delete_name)
       if person_delete == nil
         puts "#{delete_name} not found."
@@ -94,13 +106,9 @@ case option = gets.chomp.upcase
         records.delete_person(person_delete)
         puts "#{delete_name} removed."
      end
-        
+  end 
       else
-        puts "Oops! That options is not available. Let's try again."
-     end
-  end      
-  when "E"
-     puts "You are now leaving Voter Simulation...Goodbye!"
-    end
+       puts "Oops! That options is not available. Let's try again."
   end
-end
+
+puts "You are now leaving Voter Simulation...Goodbye!"
