@@ -2,91 +2,68 @@
 
 require './records.rb'
 
-class Electorial  
-  def initialize
-    @records = Records.new
+records = Records.new
   end
 
 #Opening greeting and menu options.
 
-  def main_menu
     puts "Welcome to Voter Simulation!"
     puts "Voter Simulation gives you the ability to create, list, update, and delete records.\n So, let's begin. Selecting from the following, what would you like to do?"
     puts "Options: (C)reate, (L)ist, (U)pdate, (D)elete or (E)nd records?"
     case option = gets.chomp.upcase
       
     when "C"
-      create
-    when "L"
-      puts @records.list
-    when "U"
-      update
-    when "D"
-      delete
-    when "E"
-      puts "Now leaving Voter Sim...Goodbye!"
-    break
-        
-    else
-      puts "Oops :/ Try again."
-    end
-  end
+       puts "Would you like to create? options: (V)oter or (P)olitician"
+    case option_create = gets.chomp.upcase
     
-def create
-    puts "Would you like to create? options: (V)oter or (P)olitician"
-    case option = gets.chomp.upcase
-        
     when "V"
-     puts "Name?"
-     name = gets.chomp
-     puts "Politics?"
-     puts "(L)iberal, (C)onservative, (T)ea Party, (S)ocialists, or (N)eutral."
-     case politics = gets.chomp.upcase
+     puts "Name (First and Last)?"
+     name = gets.chomp.upcase
+     puts "Politics? options: (L)iberal, (C)onservative, (T)ea Party, (S)ocialists, or (N)eutral."
+     case options_politics = gets.chomp.upcase
          
      when "L"
-       politics = "Liberal"
-       @records.create_voter(name, politics)
+       records.create_voter(name, "Liberal")
+       puts "New voter record for [#{name}, Liberal] created."
       when "C"
-       politics = "Conservative"
-       @records.create_voter(name, politics)
+       records.create_voter(name, "Conservative")
+       puts "New voter record for [#{name}, Conservative] created."
       when "T"
-       politics = "Tea Party"
-       @records.create_voter(name, politics)
+       records.create_voter(name, "Tea Party")
+       puts "New voter record for [#{name}, Tea Party] created."
       when "S"
-       politics = "Socialists"
-       @records.create_voter(name, politics)
+       records.create_voter(name, "Socialist")
+       puts "New voter record for [#{name}, Socialist] created."
       when "N"
-       politics = "Neutral"
-       @records.create_voter(name, politics)
+       records.create_voter(name, "Neutral")
+       puts "New voter record for [#{name}, Neutral] created."
       else
        puts "Oops! That options is not available. Let's try again."
-      end     
+     end
     
     when "P"
-      puts "Name?"
+      puts "Name (First and Last)?"
       name = gets.chomp.upcase
       puts "Party_Affiliation? options: (D)emocrat or (R)epublican"
-      party_affiliation = gets.chomp.upcase
-    case party_affiliation
+      case party_affiliation = gets.chomp.upcase
+    
       when "D"
-       party_affiliation = "Democrat"
-       @records.create_politician(name, party_affiliation)
+       records.create_politician(name, "Democrat")
+       puts "New politician record for [#{name}, Democrat] created."
     when "C"
-       party_affiliation = "Republican"
-       @records.create_politician(name, party_affiliation)
+       records.create_politician(name, "Republican")
+       puts "New politician record for [#{name}, Republican] created."
     else
        puts "Oops! That options is not available. Let's try again."
     end
-end        
+end           
     
-def list
-    when "L"
+
+   when "L"
      puts records.list_voters()
      puts records.list_politicians()
-    end
-end
-    
-def update
+
+when "U"
   puts "Who would you like to update? options: Name"
   case option_name = gets.chomp.upcase
   index_for_voter = @records.search_voter(name)
@@ -138,7 +115,8 @@ if index_for_politician
   end
 end  
       
-def delete
+      
+  when "D"
     puts "Who would you like to delete? option: name"
     case option_name = gets.chomp.upcase
 index_for_voter = @records.search_voter(name)
@@ -166,6 +144,9 @@ if index_for_politician
       puts "Ok. Record 'not' deleted"
     else
       puts "Oops! That options is not available. Let's try again."
+        
+ when "E"
+      puts "Now leaving Voter Sim...Goodbye!"
     end
   end
 end
