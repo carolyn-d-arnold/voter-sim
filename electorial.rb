@@ -2,76 +2,129 @@
 
 require './records.rb'
 
-class Main
+class Electorial
   def initialize
     @records = Records.new
   end
 
 #Opening greeting and menu options.
-puts "Welcome to Voter Simulation!"
-puts "Voter Simulation gives you the ability to create, list, update, and delete records.\n So, let's begin. Selecting from the following, what would you like to do?"
-puts "Options: (C)reate, (L)ist, (U)pdate, (D)elete or (E)nd records?"
-  case request = gets.chomp.upcase.strip
+
+  def main_menu
+    puts "Welcome to Voter Simulation!"
+    puts "Voter Simulation gives you the ability to create, list, update, and delete records.\n So, let's begin. Selecting from the following, what would you like to do?"
+    puts "Options: (C)reate, (L)ist, (U)pdate, (D)elete or (E)nd records?"
+    case option = gets.chomp.upcase
       
     when "C"
-      create_request
+      create
     when "L"
       puts @records.list
     when "U"
-      update_request
+      update
     when "D"
-      delete_request
+      delete
     when "E"
-      return_request
+      return "E"
     else
       puts "Oops :/ Try again."
+    end
   end
-
-def create_request
-    puts "Would you like to create a (V)oter or (P)olitician?"
-    case request = gets.chomp.upcase.strip
+    
+def create
+    puts "Would you like to create? options: (V)oter or (P)olitician"
+    case option = gets.chomp.upcase
         
-      when "V"
-       puts "Name?"
-       name = gets.chomp.upcase.strip
-       puts "Politics?"
-       puts "(L)iberal, (C)onservative, (T)ea Party, (S)ocialists, or (N)eutral."
-       politics = gets.chomp.upcase.strip
-      
-    case politics
-      when "L"
+    when "V"
+     puts "Name?"
+     name = gets.chomp
+     puts "Politics?"
+     puts "(L)iberal, (C)onservative, (T)ea Party, (S)ocialists, or (N)eutral."
+     case politics = gets.chomp.upcase
+         
+     when "L"
        politics = "Liberal"
+       @records.create_voter(name, politics)
       when "C"
        politics = "Conservative"
+       @records.create_voter(name, politics)
       when "T"
        politics = "Tea Party"
+       @records.create_voter(name, politics)
       when "S"
        politics = "Socialists"
+       @records.create_voter(name, politics)
       when "N"
        politics = "Neutral"
+       @records.create_voter(name, politics)
       else
        puts "Oops! That options is not available. Let's try again."
       end     
-        
-      @record.create_voter(name, politics)
-    end
     
     when "P"
-       puts "Name?"
-       name = gets.chomp.upcase.strip
-       puts "Party_Affiliation?"
-       puts "(D)emocrat or (R)epublican?"
-       party_affiliation = gets.chomp.upcase.strip
-      
+      puts "Name?"
+      name = gets.chomp.upcase
+      puts "Party_Affiliation? options: (D)emocrat or (R)epublican"
+      party_affiliation = gets.chomp.upcase
     case party_affiliation
       when "D"
        party_affiliation = "Democrat"
-      when "C"
+       @records.create_politician(name, party_affiliation)
+    when "C"
        party_affiliation = "Republican"
-      else
+       @records.create_politician(name, party_affiliation)
+    else
        puts "Oops! That options is not available. Let's try again."
     end
-        
-      @record.create_politician(name, party_affiliation)
+end        
+
+def update
+  puts "Who would you like to update? options: Name"
+  case option_name = gets.chomp.upcase
+  index_for_voter = @records.search_voter(name)
+      
+if index_for_voter
+  puts "What is the new name?"
+  case option_new_name = gets.chomp.upcase
+  puts "If you are updating your political affiliation, new affiliation?"
+  case new_politics = gets.chomp.upcase
+      when "L"
+       new_politics = "Liberal"
+       @records.update_voter(old_name, new_name, new_politics)
+      when "C"
+       politics = "Conservative"
+       @records.update_voter(old_name, new_name, new_politics)
+      when "T"
+       politics = "Tea Party"
+       @records.update_voter(old_name, new_name, new_politics)
+      when "S"
+       politics = "Socialists"
+       @records.update_voter(old_name, new_name, new_politics)
+      when "N"
+       politics = "Neutral"
+        @records.update_voter(old_name, new_name, new_politics)
+      else
+       puts "Oops! That options is not available. Let's try again."
+      end
+  end
+    
+  puts "Who would you like to update? options: Name"
+  case option_name = gets.chomp.upcase
+  index_for_politician = @records.search_politician(name)
+
+if index_for_politician
+  puts "What is the new name?"
+  case option_new_name = gets.chomp.upcase
+  puts "If you are updating your party affiliation, new affiliation?"
+  case new_party_affiliation = gets.chomp.upcase
+
+    when "D"
+       party_affiliation = "Democrat"
+       @records.update_politician(old_name, new_name, new_party_affiliation)
+    when "C"
+       party_affiliation = "Republican"
+       @records.update_politician(old_name, new_name, new_party_affiliation)
+    else
+       puts "Oops! That options is not available. Let's try again."
     end
-end
+  end
+end  
