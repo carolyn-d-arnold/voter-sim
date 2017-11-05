@@ -2,9 +2,7 @@
 
 require './records.rb'
 
-class Electorial
-  electorial = Electorial.new
-    
+class Electorial  
   def initialize
     @records = Records.new
   end
@@ -80,7 +78,14 @@ def create
        puts "Oops! That options is not available. Let's try again."
     end
 end        
-
+    
+def list
+    when "L"
+     puts records.list_voters()
+     puts records.list_politicians()
+    end
+end
+    
 def update
   puts "Who would you like to update? options: Name"
   case option_name = gets.chomp.upcase
