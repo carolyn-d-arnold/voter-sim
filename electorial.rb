@@ -3,6 +3,8 @@
 require './records.rb'
 
 class Electorial
+  electorial = Electorial.new
+    
   def initialize
     @records = Records.new
   end
@@ -24,7 +26,9 @@ class Electorial
     when "D"
       delete
     when "E"
-      return "E"
+      puts "Now leaving Voter Sim...Goodbye!"
+    break
+        
     else
       puts "Oops :/ Try again."
     end
@@ -128,3 +132,35 @@ if index_for_politician
     end
   end
 end  
+      
+def delete
+    puts "Who would you like to delete? option: name"
+    case option_name = gets.chomp.upcase
+index_for_voter = @records.search_voter(name)
+if index_for_voter
+    puts "Are you sure? options (Y)es or (N)o"
+    case option = gets.chomp.upcase
+     
+    when "Y", "Yes", "(y)es", "(Y)es"
+      @records.delete_voter(name)
+    when "N", "No", "(n)o", "(N)"
+      puts "Ok. Record 'not' deleted"
+    else
+      puts "Oops! That options is not available. Let's try again."
+    end
+  end
+        
+index_for_politician = @records.search_politician(name)
+if index_for_politician
+    puts "Are you sure? options (Y)es or (N)o"
+    case option = gets.chomp.upcase
+     
+    when "Y", "Yes", "(y)es", "(Y)es"
+      @records.delete_politician(name)
+    when "N", "No", "(n)o", "(N)"
+      puts "Ok. Record 'not' deleted"
+    else
+      puts "Oops! That options is not available. Let's try again."
+    end
+  end
+end
