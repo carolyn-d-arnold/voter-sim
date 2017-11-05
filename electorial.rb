@@ -3,7 +3,6 @@
 require './records.rb'
 
 records = Records.new
-  end
 
 #Opening greeting and menu options.
 
@@ -19,8 +18,8 @@ records = Records.new
     when "V"
      puts "Name (First and Last)?"
      name = gets.chomp.upcase
-     puts "Politics? options: (L)iberal, (C)onservative, (T)ea Party, (S)ocialists, or (N)eutral."
-     case options_politics = gets.chomp.upcase
+     puts "Political Affiliation? options: (L)iberal, (C)onservative, (T)ea Party, (S)ocialist, or (N)eutral."
+     case option_politics = gets.chomp.upcase
          
      when "L"
        records.create_voter(name, "Liberal")
@@ -42,52 +41,48 @@ records = Records.new
      end
     
     when "P"
-      puts "Name (First and Last)?"
+      puts "Name (First, Last)?"
       name = gets.chomp.upcase
       puts "Party_Affiliation? options: (D)emocrat or (R)epublican"
       case party_affiliation = gets.chomp.upcase
     
-      when "D"
+    when "D"
        records.create_politician(name, "Democrat")
-       puts "New politician record for [#{name}, Democrat] created."
-    when "C"
+       puts "New party record for [#{name}, Democrat] created."
+    when "R"
        records.create_politician(name, "Republican")
-       puts "New politician record for [#{name}, Republican] created."
+       puts "New party record for [#{name}, Republican] created."
     else
        puts "Oops! That options is not available. Let's try again."
     end
 end           
     
-
    when "L"
      puts records.list_voters()
      puts records.list_politicians()
 
 when "U"
-  puts "Who would you like to update? options: Name"
-  case option_name = gets.chomp.upcase
-  index_for_voter = @records.search_voter(name)
+  puts "Who would you like to update? options: Name (First, Last)"
+    case option_update_name = gets.chomp.upcase
+  person_update = records.find_person_by_name(update_name)    
+    if person_update == nil
+       puts "#{update_name} not found."
+    else
+      puts "Updated Name"
+        new_name = gets.chomp.upcase
+      person_update.update_new(new_name)
       
-if index_for_voter
-  puts "What is the new name?"
-  case option_new_name = gets.chomp.upcase
-  puts "If you are updating your political affiliation, new affiliation?"
+if person_update.is_a?(Voter)
+   puts "Are updating your political affiliation options: (L)iberal,(C)onservative, (T)ea Party, (S)ocialist, or (N)eutral"
   case new_politics = gets.chomp.upcase
-      when "L"
-       new_politics = "Liberal"
-       @records.update_voter(old_name, new_name, new_politics)
-      when "C"
-       politics = "Conservative"
-       @records.update_voter(old_name, new_name, new_politics)
-      when "T"
-       politics = "Tea Party"
-       @records.update_voter(old_name, new_name, new_politics)
-      when "S"
-       politics = "Socialists"
-       @records.update_voter(old_name, new_name, new_politics)
-      when "N"
-       politics = "Neutral"
-        @records.update_voter(old_name, new_name, new_politics)
+      person_update.update_politics([options: "Liberal", "Conservative", "Tea Party", "Socialist", "Neutral"].detect{ |politics| politics.start_with?(new_politics)})
+      
+  else
+      puts "Are you updating your party affiliation? options:(D)emocrat or (R)epublican"
+  case new_party_affiliation = gets.chomp.upcase
+      person_update.update_party_affiliation(["Democrat", "Republican"].detect{ |party_affiliation| party_affiliation.start_with?(new_party_affiliation)})
+  
+
       else
        puts "Oops! That options is not available. Let's try again."
       end
